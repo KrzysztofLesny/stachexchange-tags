@@ -1,7 +1,12 @@
 import { useSearchParams } from "react-router-dom";
-import { Container, Typography } from '@mui/material';
+import { Container, Typography, CircularProgress, Alert, AlertTitle, Pagination, LinearProgress } from '@mui/material';
 import { TagsList } from './components/TagsList';
 import { SearchForm } from './components/SearchForm';
+import { 
+  useQuery, 
+  keepPreviousData 
+} from "@tanstack/react-query"
+import { getTags } from "./components/api/tags";
 
 function App() {
   const [searchParams, setSearchParams] = useSearchParams({
@@ -10,6 +15,18 @@ function App() {
     order: "desc",
     page: "1"
   });
+  const pagesize = searchParams.get("pagesize");
+  const sort = searchParams.get("sort");
+  const order = searchParams.get("order");
+  const page = searchParams.get("page");
+  const MAX_NUM_OF_PAGES = 25; /* The maximum page number that will be returned for anonymous API access (no access token or app key) is 25 */
+
+  const { isPending, isError, error, data, isFetching, refetch  } = useQuery({
+    queryKey: ["tags", page ],
+    queryFn: () => getTags(page, pagesize, order, sort),
+    refetchOnWindowFocus: false,
+    placeholderData: keepPreviousData,
+  })
 
   const handleChange = (paramName: string, paramValue: string) => {
     setSearchParams(prev => {
@@ -20,7 +37,7 @@ function App() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("form submited");
+    refetch();
   }
 
   return (
@@ -30,17 +47,34 @@ function App() {
         <SearchForm 
           handleChange={handleChange} 
           handleSubmit={handleSubmit} 
-          pagesize = {searchParams.get("pagesize")} 
-          sort = {searchParams.get("sort")}
-          order = {searchParams.get("order")}
-          page = {searchParams.get("page")}
+          pagesize = {pagesize} 
+          sort = {sort}
+          order = {order}
         />
-        <TagsList 
-          pagesize = {searchParams.get("pagesize")} 
-          sort = {searchParams.get("sort")}
-          order = {searchParams.get("order")}
-          page = {searchParams.get("page")}
-        />
+        <Container 
+            sx={{
+                mt: 4,
+                width: "fit-content",
+            }}
+        >
+          {isPending ? (
+              <CircularProgress />
+            ) : isError ? (
+              <Alert severity="error"><AlertTitle>Error</AlertTitle> {error.message}</Alert>
+            ) : (data.error_id) ? (
+              <Alert severity="error"><AlertTitle>Error {data.error_id} {data.error_name}</AlertTitle>{data.error_message}</Alert>
+            ) : (
+              <TagsList 
+                data={data} 
+                page={page} 
+                pagesize={pagesize} 
+                MAX_NUM_OF_PAGES={MAX_NUM_OF_PAGES} 
+                handleChange={handleChange} 
+                isFetching={isFetching}
+              />
+            )
+          }
+        </Container>
       </Container>
     </div>
   );
