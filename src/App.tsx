@@ -1,12 +1,12 @@
 import { useSearchParams } from "react-router-dom";
-import { Container, Typography, CircularProgress, Alert, AlertTitle, Pagination, LinearProgress } from '@mui/material';
+import { Container, Typography, CircularProgress, Alert, AlertTitle } from '@mui/material';
 import { TagsList } from './components/TagsList';
 import { SearchForm } from './components/SearchForm';
 import { 
   useQuery, 
   keepPreviousData 
 } from "@tanstack/react-query"
-import { getTags } from "./components/api/tags";
+import { getTags } from "./api/tags";
 
 function App() {
   const [searchParams, setSearchParams] = useSearchParams({

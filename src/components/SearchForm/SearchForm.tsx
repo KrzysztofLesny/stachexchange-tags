@@ -1,4 +1,12 @@
-import { Grid, TextField, FormControl, InputLabel, Select, MenuItem, Button } from '@mui/material';
+import { 
+    Grid, 
+    TextField, 
+    FormControl, 
+    InputLabel, 
+    Select, 
+    MenuItem, 
+    Button 
+} from '@mui/material';
 
 interface SearchFormProps {
     handleChange: (paramName: string, paramValue: string) => void;
@@ -26,7 +34,7 @@ export const SearchForm: React.FC<SearchFormProps> = ({handleChange, handleSubmi
                 variant="outlined" 
                 fullWidth 
                 value={pagesize} 
-                onChange={e => handleChange("pagesize", e.target.value || "")}
+                onChange={e => handleChange("pagesize", (Number(e.target.value) < 0) ? e.target.value = "1" : (Number(e.target.value) >= 100) ? e.target.value = "100" : e.target.value || "")}
             />
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
