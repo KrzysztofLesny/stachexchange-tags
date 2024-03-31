@@ -41,42 +41,40 @@ function App() {
   }
 
   return (
-    <div className="App">
-      <Container>
-        <Typography variant='h3' component="h1" align="center" marginTop={4} marginBottom={8} >Stackexchange tags API browser</Typography>
-        <SearchForm 
-          handleChange={handleChange} 
-          handleSubmit={handleSubmit} 
-          pagesize = {pagesize} 
-          sort = {sort}
-          order = {order}
-        />
-        <Container 
-            sx={{
-                mt: 4,
-                width: "fit-content",
-            }}
-        >
-          {isPending ? (
-              <CircularProgress />
-            ) : isError ? (
-              <Alert severity="error"><AlertTitle>Error</AlertTitle> {error.message}</Alert>
-            ) : (data.error_id) ? (
-              <Alert severity="error"><AlertTitle>Error {data.error_id} {data.error_name}</AlertTitle>{data.error_message}</Alert>
-            ) : (
-              <TagsList 
-                data={data} 
-                page={page} 
-                pagesize={pagesize} 
-                MAX_NUM_OF_PAGES={MAX_NUM_OF_PAGES} 
-                handleChange={handleChange} 
-                isFetching={isFetching}
-              />
-            )
-          }
-        </Container>
+    <Container>
+      <Typography variant='h3' component="h1" align="center" marginTop={4} marginBottom={8} >Stackexchange tags API browser</Typography>
+      <SearchForm 
+        handleChange={handleChange} 
+        handleSubmit={handleSubmit} 
+        pagesize = {pagesize} 
+        sort = {sort}
+        order = {order}
+      />
+      <Container 
+        sx={{
+          mt: 4,
+          width: "fit-content",
+        }}
+      >
+        {isPending ? (
+          <CircularProgress />
+        ) : isError ? (
+          <Alert severity="error"><AlertTitle>Error</AlertTitle> {error.message}</Alert>
+        ) : (data.error_id) ? (
+          <Alert severity="error"><AlertTitle>Error {data.error_id} {data.error_name}</AlertTitle>{data.error_message}</Alert>
+        ) : (
+          <TagsList 
+            data={data} 
+            page={page} 
+            pagesize={pagesize} 
+            MAX_NUM_OF_PAGES={MAX_NUM_OF_PAGES} 
+            handleChange={handleChange} 
+            isFetching={isFetching}
+          />
+        )
+        }
       </Container>
-    </div>
+    </Container>
   );
 }
 

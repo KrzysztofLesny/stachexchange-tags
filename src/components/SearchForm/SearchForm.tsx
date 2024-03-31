@@ -5,8 +5,8 @@ import {
     InputLabel, 
     Select, 
     MenuItem, 
-    Button 
 } from '@mui/material';
+import { Button } from '../Button';
 
 interface SearchFormProps {
     handleChange: (paramName: string, paramValue: string) => void;
@@ -69,7 +69,7 @@ export const SearchForm: React.FC<SearchFormProps> = ({handleChange, handleSubmi
             </FormControl>
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
-            <Button variant="outlined" fullWidth type="submit">Get tags</Button>
+            <Button variant="outlined" fullWidth type="submit" label="Get tags"/>
           </Grid>
         </Grid>
     )
