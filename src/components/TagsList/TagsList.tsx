@@ -3,9 +3,9 @@ import {
     ListItem, 
     Typography, 
     Box,
-    LinearProgress
+    LinearProgress,
+    Pagination
 } from "@mui/material"
-import { Pagination } from "../Pagination";
 
 interface TagsListProps {
     data: any;

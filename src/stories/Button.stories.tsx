@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
-import { Pagination } from './Pagination';
+import { Button } from '@mui/material';
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
-  title: 'Components/Pagination',
-  component: Pagination,
+  title: 'Components/Button',
+  component: Button,
   parameters: {
     // Optional parameter to center the component in the Canvas. More info: https://storybook.js.org/docs/configure/story-layout
     layout: 'centered',
@@ -15,17 +15,30 @@ const meta = {
   // More on argTypes: https://storybook.js.org/docs/api/argtypes
   argTypes: {},
   // Use `fn` to spy on the onClick arg, which will appear in the actions panel once invoked: https://storybook.js.org/docs/essentials/actions#action-args
-    args: { onChange: fn()},
-} satisfies Meta<typeof Pagination>;
+  args: { onClick: fn() },
+} satisfies Meta<typeof Button>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 // More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
-export const Default: Story = {
+export const Text: Story = {
   args: {
-    page: 1,
-    count: 25,
-    color: "primary",
-  }
+    children: 'Button',
+    variant: "text",
+  },
+};
+
+export const Outlined: Story = {
+  args: {
+    ...Text.args,
+    variant: "outlined",
+  },
+};
+
+export const Contained: Story = {
+  args: {
+    ...Text.args,
+    variant: "contained",
+  },
 };
